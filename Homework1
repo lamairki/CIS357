@@ -1,0 +1,223 @@
+import UIKit
+
+
+ ************** PART 1 ******************
+
+// Problem 1:
+let myString = "hello"
+var cost = 3.14
+let cnt: Int = 2
+var shouldWe: Bool = true
+let hexConst: Int = 0xB
+let binConst: Int = 0b1010
+
+// Problem 2:
+var seven = 7
+var fourTwo = 4.2
+var thisString = "The Product of \(seven) and \(fourTwo) is... "
+var thatString = " VIOLA!!"
+var answerString: String = thisString + "\(Double(seven) * fourTwo)" + thatString
+print(answerString)
+
+// Problem 3:
+var theseBees: [String] = ["queen", "worker", "drone"]
+print(theseBees[0])
+theseBees.append("honey")
+theseBees += ["are", "us"]
+
+// Problem 4:
+for item in theseBees {
+    print(item)
+}
+for (item, value) in theseBees.enumerated() {
+    print("Item \(item+1) in theseBees is: \(value).")
+}
+
+// Problem 5:
+var authors: [String:Float] = ["Mark Twain":8.9, "Nathaniel Hawthorne":5.1, "John Steinbeck":2.3, "C.S. Lewis":9.9, "Jon Krakaur":6.1]
+
+// Problem 6:
+print(authors["John Steinbeck"]!)
+authors["Erik Larson"] = 9.2
+if authors["Jon Krakaur"]! > authors["Mark Twain"]! {
+    print("Jon Krakaur")
+}
+else {
+    print("Mark Twain")
+}
+
+// Problem 7:
+for (key, value) in authors {
+    print("\(key): \(value)")
+}
+
+// Problem 8:
+for i in 1...10 {
+    print(i)
+}
+
+// Problem 9:
+for i in (1...10).reversed() {
+    print(i)
+}
+
+// Problem 10:
+var x = 3
+var y = 4
+var product: Int = 0
+for _ in 1...y {
+    product = product + x
+}
+
+// ************** PART 2 ******************
+
+// Problem 11:
+let authorsScores = [Float] (authors.values)
+var count = 0
+var score: Float = 0
+while (count < authors.count) {
+    score += authorsScores[count]
+    count += 1
+}
+let average = score/(Float)(authors.count)
+print(average)
+
+// Problem 12:
+if average < 5.0{
+    print("Low")
+} else if average < 7.0{
+    print("Moderate")
+} else {
+    print("High")
+}
+
+// Problem 13:
+var strOut: String
+switch count {
+case 0:
+    strOut = "none"
+case 1...3:
+    strOut = "a few"
+case 4...9:
+    strOut = "several"
+case 10...99:
+    strOut = "tens of"
+case 100...999:
+    strOut = "hundreds of"
+case 1000...999999:
+    strOut = "thousands of"
+default:
+    strOut = "millions of"
+}
+
+// Problem 14:
+func verbalizeNumber(num: Int) -> String {
+    switch num {
+    case 0:
+        return "none"
+    case 1...3:
+        return "a few"
+    case 4...9:
+        return "several"
+    case 10...99:
+        return "tens of"
+    case 100...999:
+        return "hundreds of"
+    case 1000...999999:
+        return "thousands of"
+    default:
+        return "millions of"
+    }
+}
+
+// Problem 15:
+for i in stride(from: 1, to: 100_000_000, by: 1_000_000) {
+    print("There are \(verbalizeNumber(num:i)) __ snakes on this __ plane!!!")
+}
+
+//Problem 16:
+func verbalizeAndShoutNumber(number: Int) -> String {
+    return verbalizeNumber(num: number).uppercased()
+}
+
+// Problem 17:
+func expressNumbersElegently(max: Int, verbalizeFunction: (Int) -> String) -> String {
+    var resultString: String = ""
+    for i in stride(from: 1, to: max, by: 5) {
+        resultString += verbalizeFunction(i)
+    }
+    return resultString
+}
+
+var numberFunction: (Int) -> String = verbalizeNumber
+expressNumbersElegently(max: 150, verbalizeFunction: verbalizeNumber)
+
+numberFunction = verbalizeAndShoutNumber
+expressNumbersElegently(max: 150, verbalizeFunction: verbalizeAndShoutNumber)
+
+ Problem 18:
+protocol Thing {
+    func summarize() -> String
+}
+
+class Widget : Thing {
+    var name: String
+    var cost: Int
+
+    init(name: String, cost: Int) {
+        self.name = name
+        self.cost = cost
+    }
+
+    func summarize() -> String {
+        return "I am a \(name). I cost \(cost) dollars."
+    }
+}
+
+class ShineyWidget : Widget {
+
+    override init(name: String, cost: Int) {
+        super.init(name: name, cost: cost)
+    }
+
+    override func summarize() -> String {
+        return "I am a SHINEY \(name). I cost \(cost) dollars."
+    }
+}
+
+let w1 = Widget(name: "CoolWidget", cost: 10)
+let w2 = ShineyWidget(name: "CoolerWidget", cost: 100)
+print(w1.summarize())
+print(w2.summarize())
+
+// Problem 19:
+var famousLastWords = ["the cow jumped over the moon", "three score and four years ago", "lets nuc 'em Joe!", "ah, there is just something about Swift"]
+var updatedLastWords: [() -> Void] = []
+func changeFirstLetterUppercase(updatedLastWords: @escaping () -> Void) {
+
+}
+
+// Problem 20:
+extension String {
+    func encrypt () -> String {
+        var stringScalars: [Unicode.Scalar] = []
+        for i in self.unicodeScalars {
+            stringScalars.append(i)
+        }
+        let updatedScalars = stringScalars.map() {$0.value + 1}
+
+        let stringLit = updatedScalars.reduce("") { $0 + String(UnicodeScalar(UInt8($1)))}
+    return stringLit
+    }
+
+    func decrypt () -> String {
+        var stringScalars: [Unicode.Scalar] = []
+        for i in self.unicodeScalars {
+            stringScalars.append(i)
+        }
+        let updatedScalars = stringScalars.map() {$0.value - 1}
+
+        let stringLit = updatedScalars.reduce("") { $0 + String(UnicodeScalar(UInt8($1)))}
+    return stringLit
+    }
+}
